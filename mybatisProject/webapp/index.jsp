@@ -39,8 +39,8 @@
 		
 	 -->
 	 
-	여긴 index.jsp!!
-	<jsp:forward page="WEB-INF/views/main.jsp"/> 					<!-- 바로 main.jsp가 열리도록 하기 위함 -->
+	여긴 index.jsp!! 													<!-- forward로 바로 main.jsp가 열리도록 함. index.jsp의 내용은 무시됨.  -->
+	<jsp:forward page="WEB-INF/views/main.jsp"/> 					<!-- 경로를 알아도 접근할 수 없도록 WEB-INF안에 넣어두었다 -->
 
 </body>
 </html>

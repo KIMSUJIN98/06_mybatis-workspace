@@ -50,7 +50,7 @@
     	<c:choose>
     		<c:when test="${ empty loginUser }">
 		        <!-- case1. 로그인 전 -->
-		        <form action="" method="post">
+		        <form action="login.me" method="post">
 		            <table>
 		                <tr>
 		                    <td>아이디</td>

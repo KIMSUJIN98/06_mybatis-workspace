@@ -29,34 +29,66 @@
 		
 		</select>
 	
-	 -->
-	<!-- <insert id="insertMember" parameterType="com.kh.mybatis.member.model.vo.Member"> -->		<!-- 완전한 sql문일때만 parameterType 생략가능 -->
-	<insert id="insertMember" parameterType="Member">
-		insert
-		  into member
-		     (
+	-->
+	 
+	<!-- 
+	  * resultMap 마이바티스의 핵심기능 중 하나!!
+		ResultSet으로부터 조회된 컬럼값 하나씩 뽑아서 내가 지정한 vo객체에 각 필드에 담는(매핑) JDBC 코드를 줄여주는 역할 수행
+		 
+		<resultMap id="식별자" type="조회결과를 담아서 반환하고자 하는 vo객체의 타입">
+			<result column(db꺼)="조회 결과를 뽑고자 하는 db컬럼명" property(java꺼)="해당 결과를 담고자 하는 필드명"/>
+		</resultMap>
+	-->
+	 
+	<select id="loginMember" parameterType="Member" resultMap=""> 			<!-- resultMap은 객체나 리스트 같은 경우에만 사용함 / 보통 select insert update delete 순으로 작성 -->
+	 	
+		select
 		       user_no
 		     , user_id
 		     , user_pwd
-		     , user_name
 		     , email
 		     , birthday
 		     , gender
 		     , phone
 		     , address
-		     )
-		     values
-		     (
-		       seq_uno.nextval
-		     , #{userId}
-		     , #{userPwd}
-		     , #{userName}
-		     , #{email}
-		     , #{birthday}
-		     , #{gender}
-		     , #{phone}
-		     , #{address}
-		     )
+		     , enroll_date
+		     , modify_date
+		     , status
+		  from member
+		 where user_id = #{userId}
+		   and user_pwd = #{userPwd}
+		   and status = 'Y'
+   
+	</select>
+	 
+	 
+	<!-- <insert id="insertMember" parameterType="com.kh.mybatis.member.model.vo.Member"> -->		<!-- 완전한 sql문일때만 parameterType 생략가능 -->
+	<insert id="insertMember" parameterType="Member">
+		insert
+		      into member
+		      (
+		        user_no
+		      , user_id
+		      , user_pwd
+		      , user_name
+		      , email
+		      , birthday
+		      , gender
+		      , phone
+		      , address
+		      )
+	  	      values
+		      (
+		        seq_uno.nextval
+		      , #{userId}
+		      , #{userPwd}
+		      , #{userName}
+		      , #{email}
+		      , #{birthday}
+		      , #{gender}
+		      , #{phone}
+		      , #{address}
+		      )
 	</insert>
 	 
 	 
