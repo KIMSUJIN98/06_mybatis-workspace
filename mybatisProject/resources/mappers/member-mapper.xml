@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memberMapper">
+	<!-- namespace : 해당 mapper 파일의 고유한 별칭 // 별칭 안주면 경로를 지정해줘야 함 -->
+
+	<!-- 
+		* DML문
+		<insert|update|delete id="각 sql 식별자" [parameterType="전달받은 자바타입(vo일경우 = 풀클래스명 | 별칭)"]>
+		
+		</insert|update|delete>
+		// DML문 같은 경우 어짜피 실행결과가 처리된 행수(int)
+		=> 따라서 resultType, resultMap 에 대한 속성은 안써도됨
+		
+		
+		* SELECT문
+		<select id="각 sql 식별자" [parameterType="전달받은 자바타입(vo일경우 = 풀클래스명 | 별칭)"
+								  resultType|resultMap = "결과반환타입"]>
+								  
+		얘는 실행했을 때의 결과가 매번 달라짐..
+		count(*) => 전체행수 : int
+		USER_NAME => 이름 : String
+		한 행 조회 => 멤버객체
+		여러행 조회 => ArrayList
+		
+		? 대신에 해당 sql문에 전달된 객체로부터 값을 꺼낼때 #{필드명 또는 변수명 또는 키값}
+		
+		
+		</select>
+	
+	 -->
+	<!-- <insert id="insertMember" parameterType="com.kh.mybatis.member.model.vo.Member"> -->		<!-- 완전한 sql문일때만 parameterType 생략가능 -->
+	<insert id="insertMember" parameterType="Member">
+		insert
+		  into member
+		     (
+		       user_no
+		     , user_id
+		     , user_pwd
+		     , user_name
+		     , email
+		     , birthday
+		     , gender
+		     , phone
+		     , address
+		     )
+		     values
+		     (
+		       seq_uno.nextval
+		     , #{userId}
+		     , #{userPwd}
+		     , #{userName}
+		     , #{email}
+		     , #{birthday}
+		     , #{gender}
+		     , #{phone}
+		     , #{address}
+		     )
+	</insert>
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+
+
+
+</mapper>
