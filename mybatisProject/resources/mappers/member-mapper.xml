@@ -37,15 +37,34 @@
 		 
 		<resultMap id="식별자" type="조회결과를 담아서 반환하고자 하는 vo객체의 타입">
 			<result column(db꺼)="조회 결과를 뽑고자 하는 db컬럼명" property(java꺼)="해당 결과를 담고자 하는 필드명"/>
+			<result column(db꺼)="조회 결과를 뽑고자 하는 db컬럼명" property(java꺼)="해당 결과를 담고자 하는 필드명"/>
+			<result column(db꺼)="조회 결과를 뽑고자 하는 db컬럼명" property(java꺼)="해당 결과를 담고자 하는 필드명"/>
 		</resultMap>
 	-->
+	
+	<resultMap id="memberResultSet" type="Member">
+		<result column="user_no" property="userNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="user_pwd" property="userPwd"/>
+		<result column="user_name" property="userName"/>
+		<result column="email" property="email"/>
+		<result column="birthday" property="birthday"/>
+		<result column="gender" property="gender"/>
+		<result column="phone" property="phone"/>
+		<result column="address" property="address"/>
+		<result column="enroll_date" property="enrollDate"/>
+		<result column="modify_date" property="modifyDate"/>
+		<result column="status" property="status"/>
+	</resultMap>
 	 
-	<select id="loginMember" parameterType="Member" resultMap=""> 			<!-- resultMap은 객체나 리스트 같은 경우에만 사용함 / 보통 select insert update delete 순으로 작성 -->
+	 
+	<select id="loginMember" parameterType="Member" resultMap="memberResultSet"> 			<!-- resultMap은 객체나 리스트 같은 경우에만 사용함 / 보통 select insert update delete 순으로 작성 -->
 	 	
 		select
 		       user_no
 		     , user_id
 		     , user_pwd
+		     , user_name
 		     , email
 		     , birthday
 		     , gender

@@ -45,6 +45,8 @@ public class MemberDao {
 	}
 	
 	public Member loginMember(SqlSession sqlSession, Member m) {
+		// selectOne 메소드 : 조회결과가 없다면 null 반환
+		return sqlSession.selectOne("memberMapper.loginMember", m); // 우측의 두 줄을 한줄로!! Member loginMember = sqlSession.selectOne("memberMapper.loginMember", m);		//return loginMember;
 		
 	}
 

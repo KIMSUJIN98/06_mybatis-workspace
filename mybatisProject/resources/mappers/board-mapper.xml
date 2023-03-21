@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardMapper">
+
+	<resultMap id="boardResultSet" type="Board"> 						<!-- config => typeAlias에 등록을 해놓지 않으면 풀 패키지주소를 써야함 -->
+		<result column="board_no" property="boardNo"/>
+		<result column="board_title" property="boardTitle"/>
+		<result column="user_id" property="boardWriter"/> 				<!-- Board.java에 유의 -->
+		<result column="count" property="count"/>
+		<result column="create_date" property="createDate"/>
+	</resultMap>
+	
+	<select id="selectListCount" resultType="_int"> <!-- 별칭으로 => 공홈		예시: int => _int / String => string -->
+		select
+		       count(*)
+		  from board
+		 where status = 'Y'
+	</select>
+	
+	<select id="selectList" resultMap="boardResultSet">
+		select
+		       board_no
+		     , board_title
+		     , user_id
+		     , count
+		     , create_date
+		  from board b
+		  join member on (board_writer = user_no)
+		 where b.status = 'Y'
+		 order
+		    by board_no desc	
+	</select>
+
+
+</mapper>
