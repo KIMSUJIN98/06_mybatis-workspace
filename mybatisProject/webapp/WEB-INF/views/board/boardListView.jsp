@@ -27,7 +27,18 @@
         <br>
 
         <div id="search-area">
-
+			<form action="search.bo" method="get">
+				<input type="hidden" name="cpage" value="1">
+				<select name="condition">
+					<option value="writer">작성자</option>
+					<option value="title">제목</option>
+					<option value="content">내용</option>
+				</select>
+				
+				<input type="text" name="keyword">
+				<button type="submit">검색</button>
+			</form>
+			
         </div>
         <br>
         <table id="list-area">
@@ -44,7 +55,7 @@
             	<c:forEach var="b" items="${ list }">
 	                <tr>
 	                    <td>${ b.boardNo }</td>
-	                    <td>${ b.boardTitle }</td>
+	                    <td><a href="detail.bo?bno=${ b.boardNo }">${ b.boardTitle }</a></td>
 	                    <td>${ b.boardWriter }</td>
 	                    <td>${ b.count }</td>
 	                    <td>${ b.createDate }</td>

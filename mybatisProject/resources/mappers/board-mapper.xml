@@ -10,6 +10,14 @@
 		<result column="user_id" property="boardWriter"/> 				<!-- Board.java에 유의 -->
 		<result column="count" property="count"/>
 		<result column="create_date" property="createDate"/>
+		<result column="board_content" property="boardContent"/>
+	</resultMap>
+	
+	<resultMap id="replyResultSet" type="Reply">
+		<result column="reply_no" property="replyNo"/>
+		<result column="user_id" property="replyWriter"/> 				<!-- Reply.java에 유의 -->
+		<result column="reply_content" property="replyContent"/>
+		<result column="create_date" property="createDate"/>
 	</resultMap>
 	
 	<select id="selectListCount" resultType="_int"> <!-- 별칭으로 => 공홈		예시: int => _int / String => string -->
@@ -32,6 +40,88 @@
 		 order
 		    by board_no desc	
 	</select>
+	
+	<update id="increaseCount" parameterType="_int"> 		<!-- 넘겨받은 파라미터타입에 맞춰 작성 -->
+		update
+			   board
+		   set count = count + 1
+		 where board_no = #{boardNo}
+		   and status = 'Y'
+	</update>
+	
+	<select id="selectBoard" resultMap="boardResultSet" parameterType="_int">
+		select
+		       board_no
+		     , board_title
+		     , user_id
+		     , count
+		     , create_date
+		     , board_content
+		  from board
+		  join member on (board_writer = user_no)
+		 where board_no = #{boardNo}
+	</select>
+	
+	<select id="selectReplyList" resultMap="replyResultSet" parameterType="_int">
+		select
+		       reply_no
+		     , user_id
+		     , reply_content
+		     , create_date
+		  from reply r
+		  join member on (reply_writer = user_no)
+		 where ref_bno = #{boardNo}
+		   and r.status = 'Y'
+		 order
+		    by reply_no desc
+	</select>
+	
+	<select id="selectSearchCount" resultType="_int"> 				<!-- select시 parameterType 생략가능 -->
+		select 
+		       count(*)
+		  from board b
+		  join member on (board_writer = user_no)
+		 where b.status = 'Y'
+		 <if test="condition == 'writer'">
+		 	and user_id
+		 </if>
+		 <if test="condition == 'title'">
+		 	and board_title
+		 </if>
+		 <if test="condition == 'content'">
+		 	and board_content
+		 </if>
+		 like '%' || #{keyword} || '%'
+		 
+		 
+		 
+	</select>
+	
+	<select id="selectSearchList" resultMap="boardResultSet">
+		select
+		       board_no
+		     , board_title
+		     , user_id
+		     , count
+		     , create_date
+		  from board b
+		  join member on (board_writer = user_no)
+		 where b.status = 'Y'
+		 <choose>
+		 	<when test="condition == 'writer'">
+		 		and user_id
+		 	</when>
+		 	<when test="condition == 'title'">
+		 		and board_title
+		 	</when>
+		 	<otherwise>
+		 		and board_content
+		 	</otherwise>
+		 </choose>
+		  like '%' || #{keyword} || '%'
+		 order
+		    by board_no desc
+	</select>
 
-
+	
 </mapper>
