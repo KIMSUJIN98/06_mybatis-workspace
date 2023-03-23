@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <style>
     #list-area{
         border: 1px solid white;
@@ -35,11 +36,21 @@
 					<option value="content">내용</option>
 				</select>
 				
-				<input type="text" name="keyword">
+				<input type="text" name="keyword" value="${ keyword }">
 				<button type="submit">검색</button>
 			</form>
 			
         </div>
+        
+        <c:if test="${ not empty condition }">
+	        <script>
+	        	$(function(){
+	        		$("#search-area option[value=${condition}]").attr("selected", true);
+	        	})
+	        </script>
+        </c:if>
+        
+        
         <br>
         <table id="list-area">
             <thead>
@@ -72,7 +83,16 @@
             </c:if>
             
             <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-            	<a href="list.bo?cpage=${ p }">[${ p }]</a>
+            	
+            	<c:choose>
+            		<c:when test="${ empty condition }">
+	            		<a href="list.bo?cpage=${ p }">[${ p }]</a>
+	            	</c:when>
+	            	<c:otherwise>
+	            		<a href="search.bo?cpage=${ p }&condition=${ condition }&keyword=${ keyword }">[ ${ p } ]</a>
+            		</c:otherwise>
+            	</c:choose>
+            	
             </c:forEach>
             
             
